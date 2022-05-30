@@ -10,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import pt.jnation.blockbuster.model.CastMembers;
 import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
-import pt.jnation.blockbuster.model.MovieSearchResults;
 import pt.jnation.blockbuster.service.BlockbusterService;
 
 @Path("/movie")
