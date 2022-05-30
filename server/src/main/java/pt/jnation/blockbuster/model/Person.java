@@ -1,6 +1,5 @@
 package pt.jnation.blockbuster.model;
 
-import java.net.URL;
 import java.util.Objects;
 
 public class Person {
@@ -33,8 +32,8 @@ public class Person {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 83 * hash + Objects.hashCode(this.name);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -50,6 +49,7 @@ public class Person {
             return false;
         }
         final Person other = (Person) obj;
-        return Objects.equals(this.name, other.name);
+        return Objects.equals(this.id, other.id);
     }
+
 }

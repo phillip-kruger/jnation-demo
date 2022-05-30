@@ -2,6 +2,7 @@ package pt.jnation.blockbuster.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.OptionalInt;
 
 public class CastMembers {
     private String imDbId;
@@ -50,7 +51,7 @@ public class CastMembers {
     public void setActors(List<Actor> actors) {
         this.actors = actors;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;

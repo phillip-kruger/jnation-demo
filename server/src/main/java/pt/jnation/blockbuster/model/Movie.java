@@ -24,11 +24,12 @@ public class Movie extends MovieSearchResult {
     private String tagline;
     private List<String> keywordList;
     private List<MovieSearchResult> similars;
-
+    private List<Person> starList;
+    
     public Movie() {
     }
 
-    public Movie(String fullTitle, int year, URL image, LocalDate releaseDate, int runtimeMins, String runtimeStr, String plot, String awards, String genres, List<Company> companyList, String countries, String languages, String contentRating, Double imDbRating, BoxOffice boxOffice, String tagline, List<String> keywordList, List<MovieSearchResult> similars, String id, String title) {
+    public Movie(String fullTitle, int year, URL image, LocalDate releaseDate, int runtimeMins, String runtimeStr, String plot, String awards, String genres, List<Company> companyList, String countries, String languages, String contentRating, Double imDbRating, BoxOffice boxOffice, String tagline, List<String> keywordList, List<MovieSearchResult> similars, String id, String title, List<Person> starList) {
         super(id, title);
         this.fullTitle = fullTitle;
         this.year = year;
@@ -48,6 +49,7 @@ public class Movie extends MovieSearchResult {
         this.tagline = tagline;
         this.keywordList = keywordList;
         this.similars = similars;
+        this.starList = starList;
     }
 
     public String getFullTitle() {
@@ -192,5 +194,13 @@ public class Movie extends MovieSearchResult {
 
     public void setSimilars(List<MovieSearchResult> similars) {
         this.similars = similars;
+    }
+    
+    public List<Person> getStarList(){
+        return this.starList;
+    }
+    
+    public void setStarList(List<Person> starList){
+        this.starList = starList;
     }
 }
