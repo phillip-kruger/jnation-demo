@@ -2,6 +2,7 @@ package pt.jnation.blockbuster.graphql;
 
 import java.util.List;
 import java.util.Map;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import org.eclipse.microprofile.graphql.GraphQLApi;
@@ -43,9 +44,12 @@ public class MovieResource {
         return movieService.getMovieRatings(movie.getId());
     }
     
-    @Mutation 
+    @Mutation
+    @RolesAllowed("admin")
     public Map<Reviewer,Double> rate(String id, Double rating){
         movieService.rate(id, rating);
         return movieService.getMovieRatings(id);
     }
+    
+    // Subscription
 }

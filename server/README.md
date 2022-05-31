@@ -840,3 +840,58 @@ Map support
   }
 }
 ```
+
+Mutation
+
+```
+mutation rate {
+  rate(id:"tt0068646",rating:9.5){
+    key
+    value
+  }
+}
+```
+
+```
+{
+  "data": {
+    "rate": [
+      {
+        "key": "imDb",
+        "value": 9.2
+      },
+      {
+        "key": "theMovieDb",
+        "value": 8.7
+      },
+      {
+        "key": "metacritic",
+        "value": 100
+      },
+      {
+        "key": "blockbuster",
+        "value": 9.5
+      },
+      {
+        "key": "rottenTomatoes",
+        "value": 97
+      },
+      {
+        "key": "filmAffinity",
+        "value": 9
+      }
+    ]
+  }
+}
+```
+
+Security
+
+```
+mutation rate {
+  rate(id:"tt0068646",rating:9.5){
+    key
+    value
+  }
+}
+```

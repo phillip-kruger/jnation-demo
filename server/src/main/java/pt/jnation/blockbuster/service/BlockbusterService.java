@@ -96,10 +96,17 @@ public class BlockbusterService {
     @CacheInvalidate(cacheName = "rating")
     @Transactional
     public Double rate(@CacheKey String id, Double r){
-        Rating rating = new Rating();
-        rating.id = id;
-        rating.rating = r;
-        rating.persistAndFlush();
+        // If existing, do update
+        Rating existing = Rating.findById(id);
+        if(existing!=null){
+            existing.rating = r;
+            existing.persistAndFlush();
+        }else{
+            Rating rating = new Rating();
+            rating.id = id;
+            rating.rating = r;
+            rating.persistAndFlush();
+        }
         return r;
     }
     
