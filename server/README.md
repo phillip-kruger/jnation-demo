@@ -762,3 +762,81 @@ Results:
   }
 }
 ```
+
+Map support
+
+```
+{
+  movie(title:"The Godfather"){
+    id
+  	title:fullTitle
+    tagline
+    contentRating
+    keywords:keywordList
+    rating:imDbRating
+    image
+    year
+    castMembers{
+      mainActors(limit:3){
+        id
+        name
+        image
+        asCharacter
+      }
+    }
+    ratings(key:rottenTomatoes){
+      rottenTomatoes:value
+    }
+  }
+}
+```
+
+```
+{
+  "data": {
+    "movie": {
+      "id": "tt0068646",
+      "title": "The Godfather (1972)",
+      "tagline": "An offer you can't refuse.",
+      "contentRating": "R",
+      "keywords": [
+        "mafia",
+        "patriarch",
+        "crime family",
+        "organized crime",
+        "gambling syndicate"
+      ],
+      "rating": 9.2,
+      "image": "https://imdb-api.com/images/original/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_Ratio0.6751_AL_.jpg",
+      "year": 1972,
+      "castMembers": {
+        "mainActors": [
+          {
+            "id": "nm0000008",
+            "name": "Marlon Brando",
+            "image": "https://imdb-api.com/images/original/MV5BMTg3MDYyMDE5OF5BMl5BanBnXkFtZTcwNjgyNTEzNA@@._V1_Ratio1.2727_AL_.jpg",
+            "asCharacter": "Don Vito Corleone"
+          },
+          {
+            "id": "nm0000199",
+            "name": "Al Pacino",
+            "image": "https://imdb-api.com/images/original/MV5BMTQzMzg1ODAyNl5BMl5BanBnXkFtZTYwMjAxODQ1._V1_Ratio0.7273_AL_.jpg",
+            "asCharacter": "Michael"
+          },
+          {
+            "id": "nm0001001",
+            "name": "James Caan",
+            "image": "https://imdb-api.com/images/original/MV5BMTI5NjkyNDQ3NV5BMl5BanBnXkFtZTcwNjY5NTQ0Mw@@._V1_Ratio0.7273_AL_.jpg",
+            "asCharacter": "Sonny"
+          }
+        ]
+      },
+      "ratings": [
+        {
+          "rottenTomatoes": 97
+        }
+      ]
+    }
+  }
+}
+```

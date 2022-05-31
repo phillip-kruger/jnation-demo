@@ -2,6 +2,8 @@ package pt.jnation.blockbuster.service;
 
 import pt.jnation.blockbuster.model.MovieSearchResults;
 import io.quarkus.cache.CacheResult;
+import java.util.HashMap;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -10,6 +12,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import pt.jnation.blockbuster.model.CastMembers;
 import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
+import pt.jnation.blockbuster.model.Reviewer;
 
 @ApplicationScoped
 public class BlockbusterService {
@@ -61,5 +64,81 @@ public class BlockbusterService {
                 .get(CastMembers.class);
     }
     
-    
+    @CacheResult(cacheName = "rating")
+    public Map<Reviewer,Double> getMovieRatings(String id){
+        
+        Rating r = imdbClient.target(imdbUrl)
+                .path("Ratings")
+                .path(imdbKey)
+                .path(id)
+                .request()
+                .get(Rating.class);
+        
+        Map<Reviewer,Double> ratings = new HashMap<>();
+        ratings.put(Reviewer.imDb, r.imDb);
+        ratings.put(Reviewer.filmAffinity, r.filmAffinity);
+        ratings.put(Reviewer.metacritic, r.metacritic);
+        ratings.put(Reviewer.rottenTomatoes, r.rottenTomatoes);
+        ratings.put(Reviewer.theMovieDb, r.theMovieDb);
+        return ratings;
+    }
+
+    private static class Rating {
+        private Double imDb;
+        private Double metacritic;
+        private Double theMovieDb;
+        private Double rottenTomatoes;
+        private Double filmAffinity;
+        
+        public Rating() {
+        }
+
+        public Rating(Double imDb, Double metacritic, Double theMovieDb, Double rottenTomatoes, Double filmAffinity) {
+            this.imDb = imDb;
+            this.metacritic = metacritic;
+            this.theMovieDb = theMovieDb;
+            this.rottenTomatoes = rottenTomatoes;
+            this.filmAffinity = filmAffinity;
+        }
+
+        public Double getImDb() {
+            return imDb;
+        }
+
+        public void setImDb(Double imDb) {
+            this.imDb = imDb;
+        }
+
+        public Double getMetacritic() {
+            return metacritic;
+        }
+
+        public void setMetacritic(Double metacritic) {
+            this.metacritic = metacritic;
+        }
+
+        public Double getTheMovieDb() {
+            return theMovieDb;
+        }
+
+        public void setTheMovieDb(Double theMovieDb) {
+            this.theMovieDb = theMovieDb;
+        }
+
+        public Double getRottenTomatoes() {
+            return rottenTomatoes;
+        }
+
+        public void setRottenTomatoes(Double rottenTomatoes) {
+            this.rottenTomatoes = rottenTomatoes;
+        }
+
+        public Double getFilmAffinity() {
+            return filmAffinity;
+        }
+
+        public void setFilmAffinity(Double filmAffinity) {
+            this.filmAffinity = filmAffinity;
+        }
+    }
 }

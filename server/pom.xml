@@ -55,6 +55,7 @@
         </dependency>
         
         <!-- For the data storage -->
+        <!-- Cache from IMDB -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-reactive</artifactId>
@@ -62,6 +63,15 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-cache</artifactId>
+        </dependency>
+        <!-- Our own storage -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-hibernate-orm-panache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
     </dependencies>
     <build>
