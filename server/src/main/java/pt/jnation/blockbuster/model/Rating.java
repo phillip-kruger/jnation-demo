@@ -1,10 +1,12 @@
 package pt.jnation.blockbuster.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
-public class Rating extends PanacheEntity {
+public class Rating extends PanacheEntityBase {
+    @Id
     public String id;
     public Double rating;
 }

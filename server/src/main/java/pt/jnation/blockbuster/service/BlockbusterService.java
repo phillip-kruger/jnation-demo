@@ -1,17 +1,21 @@
 package pt.jnation.blockbuster.service;
 
+import io.quarkus.cache.CacheInvalidate;
+import io.quarkus.cache.CacheKey;
 import pt.jnation.blockbuster.model.MovieSearchResults;
 import io.quarkus.cache.CacheResult;
 import java.util.HashMap;
 import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import pt.jnation.blockbuster.model.CastMembers;
 import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
+import pt.jnation.blockbuster.model.Rating;
 import pt.jnation.blockbuster.model.Reviewer;
 
 @ApplicationScoped
@@ -67,12 +71,12 @@ public class BlockbusterService {
     @CacheResult(cacheName = "rating")
     public Map<Reviewer,Double> getMovieRatings(String id){
         
-        Rating r = imdbClient.target(imdbUrl)
+        RatingResponse r = imdbClient.target(imdbUrl)
                 .path("Ratings")
                 .path(imdbKey)
                 .path(id)
                 .request()
-                .get(Rating.class);
+                .get(RatingResponse.class);
         
         Map<Reviewer,Double> ratings = new HashMap<>();
         ratings.put(Reviewer.imDb, r.imDb);
@@ -80,20 +84,36 @@ public class BlockbusterService {
         ratings.put(Reviewer.metacritic, r.metacritic);
         ratings.put(Reviewer.rottenTomatoes, r.rottenTomatoes);
         ratings.put(Reviewer.theMovieDb, r.theMovieDb);
+        
+        // Also add our own rating
+        Rating rating = Rating.findById(id);
+        if(rating!=null){
+            ratings.put(Reviewer.blockbuster, rating.rating);
+        }
         return ratings;
     }
 
-    private static class Rating {
+    @CacheInvalidate(cacheName = "rating")
+    @Transactional
+    public Double rate(@CacheKey String id, Double r){
+        Rating rating = new Rating();
+        rating.id = id;
+        rating.rating = r;
+        rating.persistAndFlush();
+        return r;
+    }
+    
+    private static class RatingResponse {
         private Double imDb;
         private Double metacritic;
         private Double theMovieDb;
         private Double rottenTomatoes;
         private Double filmAffinity;
         
-        public Rating() {
+        public RatingResponse() {
         }
 
-        public Rating(Double imDb, Double metacritic, Double theMovieDb, Double rottenTomatoes, Double filmAffinity) {
+        public RatingResponse(Double imDb, Double metacritic, Double theMovieDb, Double rottenTomatoes, Double filmAffinity) {
             this.imDb = imDb;
             this.metacritic = metacritic;
             this.theMovieDb = theMovieDb;
