@@ -1,7 +1,9 @@
 package pt.jnation.blockbuster.graphql;
 
+import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.graphql.api.Subscription;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
@@ -16,6 +18,7 @@ import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
 import pt.jnation.blockbuster.model.Rating;
 import pt.jnation.blockbuster.model.Reviewer;
+import pt.jnation.blockbuster.model.Reviews;
 import pt.jnation.blockbuster.service.BlockbusterService;
 
 @GraphQLApi
@@ -31,6 +34,7 @@ public class MovieResource {
     
     @Query
     public Movie getMovie(String title) {
+        System.out.println(">>>>>>> MOVIE :" + Thread.currentThread().getName());
         return movieService.getMovie(title);
     }
     
@@ -56,5 +60,10 @@ public class MovieResource {
     @Subscription
     public Multi<Rating> listenForRateChanges(){
         return movieService.ratingChangedListener();
+    }
+    
+    public Uni<Reviews> getReviews(@Source Movie movie){
+        System.out.println(">>>>>>> REVIEW :" + Thread.currentThread().getName());
+        return movieService.getReviews(movie.getId());
     }
 }

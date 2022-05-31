@@ -5,8 +5,10 @@ import io.quarkus.cache.CacheKey;
 import pt.jnation.blockbuster.model.MovieSearchResults;
 import io.quarkus.cache.CacheResult;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 import io.smallrye.mutiny.operators.multi.processors.BroadcastProcessor;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,11 +16,15 @@ import javax.transaction.Transactional;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import pt.jnation.blockbuster.model.CastMembers;
 import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
 import pt.jnation.blockbuster.model.Rating;
+import pt.jnation.blockbuster.model.Review;
 import pt.jnation.blockbuster.model.Reviewer;
+import pt.jnation.blockbuster.model.Reviews;
+import pt.jnation.blockbuster.service.review.ReviewService;
 
 @ApplicationScoped
 public class BlockbusterService {
@@ -33,6 +39,9 @@ public class BlockbusterService {
     
     @Inject 
     BlockbusterService blockbusterService;
+    
+    @RestClient 
+    ReviewService reviewService;
     
     BroadcastProcessor<Rating> ratingChangedBroadcaster = BroadcastProcessor.create();
     
@@ -119,6 +128,11 @@ public class BlockbusterService {
     
     public Multi<Rating> ratingChangedListener(){
         return ratingChangedBroadcaster;
+    }
+    
+    @CacheResult(cacheName = "review")
+    public Uni<Reviews> getReviews(String id){
+        return reviewService.getReviews(imdbKey, id);
     }
     
     private static class RatingResponse {

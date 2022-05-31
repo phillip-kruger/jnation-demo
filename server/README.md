@@ -905,3 +905,28 @@ subscription ratingChanged {
   }
 }
 ```
+
+Non-Blocking
+
+```
+{
+  movie(title:"The Godfather"){
+    id
+  	title:fullTitle
+    reviews {
+      review{
+        title
+        content
+      }
+    }
+  }
+}
+```
+
+In the log file:
+
+```
+>>>>>>> MOVIE :vert.x-worker-thread-0
+>>>>>>> REVIEW :vert.x-eventloop-thread-2
+
+```
