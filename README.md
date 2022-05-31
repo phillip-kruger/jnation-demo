@@ -14,8 +14,6 @@
 1.1 Query 2 movies
 1.1 Show client(s)
 
-(By now over and under fetching shown)
-
 1. Map support
 1.1 Add Map of ratings
 1.1 Show client(s)
