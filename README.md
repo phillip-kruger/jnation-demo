@@ -1,40 +1,40 @@
 # JNation GraphQL Demo
 
-1. Existing REST Application
-1.1. Show server and Swagger UI
-1.1. Show client(s)
+* Existing REST Application
+  * Show server and Swagger UI
+  * Show client(s)
 
-1. Convert to GraphQL
-1.1. Convert the server + first source
-1.1. Show client(s)
-1.1. Add deeper level source
-1.1. Show client(s)
+* Convert to GraphQL
+  * Convert the server + first source
+  * Show client(s)
+  * Add deeper level source
+  * Show client(s)
 
-1. Multiple queries in one request
-1.1. Query 2 movies
-1.1. Show client(s)
+* Multiple queries in one request
+  * Query 2 movies
+  * Show client(s)
 
-1. Map support
-1.1. Add Map of ratings
-1.1. Show client(s)
+* Map support
+  * Add Map of ratings
+  * Show client(s)
 
-1. Mutation
-1.1. Add rate method
-1.1. Show client(s)
+* Mutation
+  * Add rate method
+  * Show client(s)
 
-1. Subscriptions
-1.1. Add listenForRatingChange method
-1.1. Show client(s)
+* Subscriptions
+  * Add listenForRatingChange method
+  * Show client(s)
 
-1. Security
-1.1. Secure the rate method
-1.1. Show failure
-1.1. Authenticate and show success
-1.1. Show client(s)
+* Security
+  * Secure the rate method
+  * Show failure
+  * Authenticate and show success
+  * Show client(s)
 
-1. Non-blocking
-1.1. Add reviews source Uni
-1.1. Add `Sys.out`
-1.1. Demo mix of worker and eventloop
-1.1. Talk about `@NonBlocking`
-1.1. Show client(s) ?
+* Non-blocking
+  * Add reviews source Uni
+  * Add `Sys.out`
+  * Demo mix of worker and eventloop
+  * Talk about `@NonBlocking`
+  * Show client(s) ?
