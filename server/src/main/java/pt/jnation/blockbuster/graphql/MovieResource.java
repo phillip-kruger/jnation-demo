@@ -1,6 +1,5 @@
 package pt.jnation.blockbuster.graphql;
 
-import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.graphql.api.Subscription;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
