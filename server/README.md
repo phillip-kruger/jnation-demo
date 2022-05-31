@@ -895,3 +895,13 @@ mutation rate {
   }
 }
 ```
+
+Subscription
+
+```
+subscription ratingChanged {
+  listenForRateChanges{
+    rating
+  }
+}
+```

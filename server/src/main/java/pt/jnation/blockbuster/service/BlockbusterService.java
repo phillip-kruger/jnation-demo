@@ -4,6 +4,8 @@ import io.quarkus.cache.CacheInvalidate;
 import io.quarkus.cache.CacheKey;
 import pt.jnation.blockbuster.model.MovieSearchResults;
 import io.quarkus.cache.CacheResult;
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.operators.multi.processors.BroadcastProcessor;
 import java.util.HashMap;
 import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
@@ -31,6 +33,8 @@ public class BlockbusterService {
     
     @Inject 
     BlockbusterService blockbusterService;
+    
+    BroadcastProcessor<Rating> ratingChangedBroadcaster = BroadcastProcessor.create();
     
     @CacheResult(cacheName = "movie")
     public Movie getMovie(String title){
@@ -101,13 +105,20 @@ public class BlockbusterService {
         if(existing!=null){
             existing.rating = r;
             existing.persistAndFlush();
+            ratingChangedBroadcaster.onNext(existing);
         }else{
             Rating rating = new Rating();
             rating.id = id;
             rating.rating = r;
             rating.persistAndFlush();
+            ratingChangedBroadcaster.onNext(rating);
         }
+        
         return r;
+    }
+    
+    public Multi<Rating> ratingChangedListener(){
+        return ratingChangedBroadcaster;
     }
     
     private static class RatingResponse {

@@ -1,10 +1,11 @@
 package pt.jnation.blockbuster.graphql;
 
+import io.smallrye.graphql.api.Subscription;
+import io.smallrye.mutiny.Multi;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
@@ -13,6 +14,7 @@ import pt.jnation.blockbuster.model.Actor;
 import pt.jnation.blockbuster.model.CastMembers;
 import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
+import pt.jnation.blockbuster.model.Rating;
 import pt.jnation.blockbuster.model.Reviewer;
 import pt.jnation.blockbuster.service.BlockbusterService;
 
@@ -51,5 +53,8 @@ public class MovieResource {
         return movieService.getMovieRatings(id);
     }
     
-    // Subscription
+    @Subscription
+    public Multi<Rating> listenForRateChanges(){
+        return movieService.ratingChangedListener();
+    }
 }
