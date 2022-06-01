@@ -1,6 +1,6 @@
-# Blockbusters server
+# Movie server
 
-This is the server-side for the Blockbuster App
+This is the server-side for the Movie App
 
 ## Running the application in dev mode
 
@@ -39,7 +39,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./mvnw package -Pnative -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./target/blockbusters-server-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./target/movie-server-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
 
@@ -869,7 +869,7 @@ mutation rate {
         "value": 100
       },
       {
-        "key": "blockbuster",
+        "key": "quarkus",
         "value": 9.5
       },
       {
