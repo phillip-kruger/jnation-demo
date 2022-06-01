@@ -1,6 +1,8 @@
 package pt.jnation.blockbuster.jaxrs;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import pt.jnation.blockbuster.model.CastMembers;
+import pt.jnation.blockbuster.model.Movie;
 import pt.jnation.blockbuster.model.MovieSearchResult;
 
 import javax.ws.rs.GET;
@@ -17,5 +19,13 @@ public interface MovieRestClient {
     @GET
     @Path("/search/{keyword}")
     List<MovieSearchResult> searchMovies(@PathParam("keyword") String keyword);
+
+    @GET
+    @Path("/{title}")
+    Movie getMovie(@PathParam("title") String title);
+
+    @GET
+    @Path("/cast/{id}")
+    CastMembers getCastMembers(@PathParam("id") String id);
 
 }
