@@ -1,4 +1,4 @@
-package pt.jnation.blockbuster.graphql;
+package pt.jnation.movie.graphql;
 
 import io.smallrye.graphql.api.Subscription;
 import io.smallrye.mutiny.Multi;
@@ -11,24 +11,24 @@ import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.graphql.Source;
-import pt.jnation.blockbuster.model.Actor;
-import pt.jnation.blockbuster.model.CastMembers;
-import pt.jnation.blockbuster.model.Movie;
-import pt.jnation.blockbuster.model.MovieSearchResult;
-import pt.jnation.blockbuster.model.Rating;
-import pt.jnation.blockbuster.model.Reviewer;
-import pt.jnation.blockbuster.model.Reviews;
-import pt.jnation.blockbuster.service.BlockbusterService;
+import pt.jnation.movie.model.Actor;
+import pt.jnation.movie.model.CastMembers;
+import pt.jnation.movie.model.Movie;
+import pt.jnation.movie.model.MovieReference;
+import pt.jnation.movie.model.Rating;
+import pt.jnation.movie.model.Reviewer;
+import pt.jnation.movie.model.Reviews;
+import pt.jnation.movie.service.MovieService;
 
 @GraphQLApi
 public class MovieResource {
 
     @Inject
-    BlockbusterService movieService;
+    MovieService movieService;
     
     @Query
-    public List<MovieSearchResult> searchMovies(String keyword) {
-        return movieService.searchMovies(keyword).getResults();
+    public List<MovieReference> searchMovies(String keyword) {
+        return movieService.searchMovies(keyword).results;
     }
     
     @Query
@@ -38,15 +38,15 @@ public class MovieResource {
     }
     
     public CastMembers getCastMembers(@Source Movie movie){
-        return movieService.getCastMembers(movie.getId());
+        return movieService.getCastMembers(movie.id);
     }
     
     public List<Actor> getMainActors(@Source CastMembers castMembers, int limit){
-        return castMembers.getActors().subList(0, limit);
+        return castMembers.actors.subList(0, limit);
     }
     
     public Map<Reviewer,Double> getRatings(@Source Movie movie){
-        return movieService.getMovieRatings(movie.getId());
+        return movieService.getMovieRatings(movie.id);
     }
     
     @Mutation
@@ -63,6 +63,6 @@ public class MovieResource {
     
     public Uni<Reviews> getReviews(@Source Movie movie){
         System.out.println(">>>>>>> REVIEW :" + Thread.currentThread().getName());
-        return movieService.getReviews(movie.getId());
+        return movieService.getReviews(movie.id);
     }
 }

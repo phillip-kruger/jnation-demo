@@ -1,4 +1,4 @@
-package pt.jnation.blockbuster.model;
+package pt.jnation.movie.model;
 
 public enum Reviewer {
     imDb,
@@ -6,5 +6,5 @@ public enum Reviewer {
     theMovieDb,
     rottenTomatoes,
     filmAffinity,
-    blockbuster
+    quarkus
 }

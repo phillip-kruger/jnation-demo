@@ -3,10 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     
-    <name>Blockbuster : Server</name>
+    <name>Movie : Server</name>
     
     <groupId>pt.jnation.graphql</groupId>
-    <artifactId>blockbusters-server</artifactId>
+    <artifactId>movie-server</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>

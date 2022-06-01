@@ -1,11 +1,11 @@
-package pt.jnation.blockbuster.service.review;
+package pt.jnation.movie.service;
 
 import io.smallrye.mutiny.Uni;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
-import pt.jnation.blockbuster.model.Reviews;
+import pt.jnation.movie.model.Reviews;
 
 @Path("/Reviews")
 @RegisterRestClient(baseUri = "https://imdb-api.com/en/API")

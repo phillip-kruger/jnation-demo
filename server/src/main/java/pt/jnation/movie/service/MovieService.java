@@ -1,8 +1,5 @@
-package pt.jnation.blockbuster.service;
+package pt.jnation.movie.service;
 
-import io.quarkus.cache.CacheInvalidate;
-import io.quarkus.cache.CacheKey;
-import pt.jnation.blockbuster.model.MovieSearchResults;
 import io.quarkus.cache.CacheResult;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -16,16 +13,16 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import pt.jnation.blockbuster.model.CastMembers;
-import pt.jnation.blockbuster.model.Movie;
-import pt.jnation.blockbuster.model.MovieSearchResult;
-import pt.jnation.blockbuster.model.Rating;
-import pt.jnation.blockbuster.model.Reviewer;
-import pt.jnation.blockbuster.model.Reviews;
-import pt.jnation.blockbuster.service.review.ReviewService;
+import pt.jnation.movie.model.CastMembers;
+import pt.jnation.movie.model.Movie;
+import pt.jnation.movie.model.MovieReference;
+import pt.jnation.movie.model.MovieReferences;
+import pt.jnation.movie.model.Rating;
+import pt.jnation.movie.model.Reviewer;
+import pt.jnation.movie.model.Reviews;
 
 @ApplicationScoped
-public class BlockbusterService {
+public class MovieService {
 
     private final Client imdbClient = ClientBuilder.newBuilder().build();
     
@@ -36,50 +33,80 @@ public class BlockbusterService {
     String imdbKey;
     
     @Inject 
-    BlockbusterService blockbusterService;
+    MovieService blockbusterService;
     
     @RestClient 
     ReviewService reviewService;
     
     BroadcastProcessor<Rating> ratingChangedBroadcaster = BroadcastProcessor.create();
     
-    @CacheResult(cacheName = "movie")
+    @Transactional
     public Movie getMovie(String title){
-        MovieSearchResults movieSearchResults = blockbusterService.searchMovies(title);
-        if(movieSearchResults.hasResults()){
-            MovieSearchResult movieSearchResult = movieSearchResults.getResult();
-            return imdbClient.target(imdbUrl)
-                .path("Title")
-                .path(imdbKey)
-                .path(movieSearchResult.getId())
-                .request()
-                .get(Movie.class);
+        MovieReferences movieReferences = blockbusterService.searchMovies(title);
+        if(movieReferences.hasResults()){
+            MovieReference movieReference = movieReferences.getResult();
+            
+            // First check the Database, else fallback to external IMDb
+            Movie dbMovie = Movie.findById(movieReference.id);
+            if(dbMovie!=null){
+                return dbMovie;
+            }else {
+                Movie imdbMovie = imdbClient.target(imdbUrl)
+                        .path("Title")
+                        .path(imdbKey)
+                        .path(movieReference.id)
+                        .request()
+                        .get(Movie.class);
+                imdbMovie.persistAndFlush();
+                return imdbMovie;
+            }
         }
         return null;
     }
 
-    @CacheResult(cacheName = "movies")
-    public MovieSearchResults searchMovies(String keyword) {
-        return imdbClient.target(imdbUrl)
-                .path("SearchTitle")
-                .path(imdbKey)
-                .path(keyword)
-                .request()
-                .get(MovieSearchResults.class);
-        
+    @Transactional
+    public MovieReferences searchMovies(String keyword) {
+        // First check the Database, else fallback to external IMDb
+        MovieReferences dbMovieReferences = MovieReferences.findById(keyword);
+        if(dbMovieReferences!=null){
+            return dbMovieReferences;
+        }else {
+            MovieReferences imdbMovieReferences = imdbClient.target(imdbUrl)
+                    .path("SearchTitle")
+                    .path(imdbKey)
+                    .path(keyword)
+                    .request()
+                    .get(MovieReferences.class);
+            
+            if(imdbMovieReferences!=null && imdbMovieReferences.hasResults()){
+                imdbMovieReferences.keyword = keyword;
+                imdbMovieReferences.persistAndFlush();
+            }
+            return imdbMovieReferences;
+        }
     }
     
-    @CacheResult(cacheName = "cast")
+    @Transactional
     public CastMembers getCastMembers(String id){
-        return imdbClient.target(imdbUrl)
+        // First check the Database, else fallback to external IMDb
+        CastMembers dbCastMembers = CastMembers.findById(id);
+        if(dbCastMembers!=null){
+            return dbCastMembers;
+        }else {
+            CastMembers imdbCastMembers = imdbClient.target(imdbUrl)
                 .path("FullCast")
                 .path(imdbKey)
                 .path(id)
                 .request()
                 .get(CastMembers.class);
+            
+            if(imdbCastMembers!=null){
+                imdbCastMembers.persistAndFlush();
+            }
+            return imdbCastMembers;
+        }
     }
     
-    @CacheResult(cacheName = "rating")
     public Map<Reviewer,Double> getMovieRatings(String id){
         
         RatingResponse r = imdbClient.target(imdbUrl)
@@ -99,14 +126,13 @@ public class BlockbusterService {
         // Also add our own rating
         Rating rating = Rating.findById(id);
         if(rating!=null){
-            ratings.put(Reviewer.blockbuster, rating.rating);
+            ratings.put(Reviewer.quarkus, rating.rating);
         }
         return ratings;
     }
 
-    @CacheInvalidate(cacheName = "rating")
     @Transactional
-    public Double rate(@CacheKey String id, Double r){
+    public Double rate(String id, Double r){
         // If existing, do update
         Rating existing = Rating.findById(id);
         if(existing!=null){
