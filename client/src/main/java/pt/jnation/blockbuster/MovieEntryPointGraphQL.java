@@ -24,7 +24,7 @@ import static io.smallrye.graphql.client.core.Operation.operation;
 public class MovieEntryPointGraphQL {
 
     @Inject
-    @GraphQLClient("blockbuster-dynamic")
+    @GraphQLClient("movies-dynamic")
     DynamicGraphQLClient dynamicClient;
 
 

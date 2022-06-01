@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@RegisterRestClient(configKey = "blockbuster")
+@RegisterRestClient(configKey = "movies")
 @Path("/movie")
 public interface MovieRestClient {
 
