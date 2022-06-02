@@ -8,7 +8,6 @@ public class Movie extends MovieSearchResult {
 
     private String fullTitle;
     private int year;
-    private URL image;
     private LocalDate releaseDate;
     private int runtimeMins;
     private String runtimeStr;
@@ -29,29 +28,6 @@ public class Movie extends MovieSearchResult {
     public Movie() {
     }
 
-    public Movie(String fullTitle, int year, URL image, LocalDate releaseDate, int runtimeMins, String runtimeStr, String plot, String awards, String genres, List<Company> companyList, String countries, String languages, String contentRating, Double imDbRating, BoxOffice boxOffice, String tagline, List<String> keywordList, List<MovieSearchResult> similars, String id, String title, List<Person> starList) {
-        super(id, title);
-        this.fullTitle = fullTitle;
-        this.year = year;
-        this.image = image;
-        this.releaseDate = releaseDate;
-        this.runtimeMins = runtimeMins;
-        this.runtimeStr = runtimeStr;
-        this.plot = plot;
-        this.awards = awards;
-        this.genres = genres;
-        this.companyList = companyList;
-        this.countries = countries;
-        this.languages = languages;
-        this.contentRating = contentRating;
-        this.imDbRating = imDbRating;
-        this.boxOffice = boxOffice;
-        this.tagline = tagline;
-        this.keywordList = keywordList;
-        this.similars = similars;
-        this.starList = starList;
-    }
-
     public String getFullTitle() {
         return fullTitle;
     }
@@ -66,14 +42,6 @@ public class Movie extends MovieSearchResult {
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public URL getImage() {
-        return image;
-    }
-
-    public void setImage(URL image) {
-        this.image = image;
     }
 
     public LocalDate getReleaseDate() {
