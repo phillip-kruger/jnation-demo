@@ -6,5 +6,5 @@ public enum Reviewer {
     theMovieDb,
     rottenTomatoes,
     filmAffinity,
-    blockbuster
+    quarkus
 }

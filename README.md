@@ -2,16 +2,23 @@
 
 * Existing REST Application
   * Show server and Swagger UI
+    * `GET` /movie/search/{keyword} with "Godfather" 
     * `GET` /movie/{title} with "Top Gun: Maverick"
     * `GET` /movie/cast/{id} with "tt1745960"
-  * Show client(s)
-    *
-    *
+  * Show client
+    * `GET` /jaxrs/{title} with "Top Gun: Maverick"
 
 * Convert to GraphQL
   * Convert the server + first source
-    * Basic"
-
+    * Basic
+      ```
+        { 
+          searchMovies(keyword:"The Godfather") {
+            id
+            title
+          }
+        }
+      ```
       ```
         {
             movie(title:"Top Gun: Maverick"){
@@ -20,7 +27,11 @@
               genres
             }
           }
-      ```
+     ```         
+    * Show dynamic client:
+      * `GET` /graphql/search/{keyword} with "Godfather"
+    * Show typesafe client:
+      * `GET` /graphql/{title} with "Top Gun: Maverick"
     * Add source
 
       ```
@@ -39,7 +50,6 @@
             }
           }
       ```
-  * Show client(s)
   * Add deeper level source
     ```
         public List<Actor> getMainActors(@Source CastMembers castMembers, int limit){
@@ -65,7 +75,8 @@
           }
     ```
 
-  * Show client(s)
+  * Show source with typesafe client
+    * `GET` /graphql/mainactors/{title}/{limit} with "Top Gun: Maverick" and "3"
 
 * Multiple queries in one request
   * Query 2 movies
@@ -97,7 +108,6 @@
           }
         }
       ```
-  * Show client(s)
 
 * Map support
   * Add Map of ratings
@@ -157,7 +167,8 @@
               }
             }
         ```
-  * Show client(s)
+  * Show typesafe client
+    * `GET` /graphql/rate/{id}/{rating} with "tt1745960" and "7.3"
 
 * Subscriptions
   * Add listenForRatingChange method
@@ -187,6 +198,9 @@
         }
       ```
   * Show client(s)
+    * Start a subscription using dynamic client: `GET` /graphql/listen
+    * Trigger an event: `GET` /graphql/rate/{id}/{rating} with id="tt1745960" and rating=6
+    * Show the server log with the update event
 
 * Security
   * Secure the rate method
