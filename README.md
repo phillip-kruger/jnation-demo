@@ -33,11 +33,10 @@ and
             }
           }
      ```         
-
-* Show dynamic client:
-  * `GET` /graphql/search/{keyword} with "Godfather"
-* Show typesafe client:
-  * `GET` /graphql/{title} with "Top Gun: Maverick"
+    * Show dynamic client:
+      * `GET` /graphql/search/{keyword} with "The Godfather"
+    * Show typesafe client:
+      * `GET` /graphql/{title} with "Top Gun: Maverick"
 
 ### Add source
 

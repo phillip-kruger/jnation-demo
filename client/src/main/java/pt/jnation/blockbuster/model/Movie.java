@@ -1,14 +1,20 @@
 package pt.jnation.blockbuster.model;
 
+import org.eclipse.microprofile.graphql.DateFormat;
+import org.eclipse.microprofile.graphql.Ignore;
+
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Movie extends MovieSearchResult {
 
     private String fullTitle;
     private int year;
-    private LocalDate releaseDate;
+//    @DateFormat("yyyy-MM-dd'T'HH:mm")
+    @Ignore
+    private Date releaseDate;
     private int runtimeMins;
     private String runtimeStr;
     private String plot;
@@ -44,11 +50,11 @@ public class Movie extends MovieSearchResult {
         this.year = year;
     }
 
-    public LocalDate getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 

@@ -5,6 +5,7 @@ import pt.jnation.blockbuster.jaxrs.MovieRestClient;
 import pt.jnation.blockbuster.model.Actor;
 import pt.jnation.blockbuster.model.CastMembers;
 import pt.jnation.blockbuster.model.Movie;
+import pt.jnation.blockbuster.model.MovieReference;
 import pt.jnation.blockbuster.model.MovieSearchResult;
 
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ public class MovieEntryPointJaxRs {
     @GET
     @Path("/search/{keyword}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<MovieSearchResult> searchMovies(@PathParam("keyword") String keyword) {
+    public List<MovieReference> searchMovies(@PathParam("keyword") String keyword) {
         return client.searchMovies(keyword);
     }
 

@@ -1,5 +1,6 @@
 package pt.jnation.movie.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ public class MovieReferences extends PanacheEntityBase {
         return this.results!=null && !this.results.isEmpty();
     }
     
+    @JsonIgnore
     public MovieReference getResult(){
         if(hasResults()){
             return this.results.iterator().next();
