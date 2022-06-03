@@ -4,10 +4,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Deprecated
 @Entity
-public class Rating extends PanacheEntityBase {
+public class Director extends PanacheEntityBase {
     @Id
     public String id;
-    public Double rating;
+    public String name;  
+    
 }

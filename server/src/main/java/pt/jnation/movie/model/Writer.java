@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Person extends PanacheEntityBase {
+public class Writer extends PanacheEntityBase {
     @Id
     public String id;
     public String name;  

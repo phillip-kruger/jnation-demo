@@ -30,6 +30,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    
     <dependencies>
         
         <!--REST -->
@@ -49,19 +50,19 @@
         </dependency>
         
         <!-- Validation -->
-<!--        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-hibernate-validator</artifactId>
-        </dependency>-->
-        
-        <!-- Security -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-oidc</artifactId>
+            <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
         
+        <!-- Security -->
+<!--        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-oidc</artifactId>
+        </dependency>-->
+        
         <!-- For the data storage -->
-        <!-- Cache from IMDB -->
+        <!-- Get from IMDB -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-reactive</artifactId>

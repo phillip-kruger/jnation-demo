@@ -34,7 +34,7 @@ public class Reviews {
 
     public Review getReview(){
         if(this.items!=null && !this.items.isEmpty()){
-            return this.items.get(0);
+            return this.items.iterator().next();
         }
         return null;
     }

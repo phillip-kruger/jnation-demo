@@ -2,7 +2,9 @@ package pt.jnation.movie.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -10,16 +12,16 @@ import javax.persistence.OneToMany;
 public class MovieReferences extends PanacheEntityBase {
     @Id
     public String keyword;
-    @OneToMany(mappedBy="id")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     public List<MovieReference> results;
     
     public boolean hasResults(){
-        return results!=null && !results.isEmpty();
+        return this.results!=null && !this.results.isEmpty();
     }
     
     public MovieReference getResult(){
         if(hasResults()){
-            return results.get(0);
+            return this.results.iterator().next();
         }
         return null;
     }

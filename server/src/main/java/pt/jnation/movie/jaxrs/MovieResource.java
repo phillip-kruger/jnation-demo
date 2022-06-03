@@ -33,6 +33,13 @@ public class MovieResource {
     }
     
     @GET
+    @Path("/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Movie getMovieById(@PathParam("id") String id) {
+        return movieService.getMovieById(id);
+    }
+    
+    @GET
     @Path("/cast/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public CastMembers getCastMembers(@PathParam("id") String id){
