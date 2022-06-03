@@ -9,8 +9,11 @@
     * `GET` /jaxrs/{title} with "Top Gun: Maverick"
 
 ## Convert to GraphQL
-  * Convert the server + first source
-    * Basic
+
+    Convert the server + first source
+
+### Basic
+
       ```
         { 
           searchMovies(keyword:"The Godfather") {
@@ -19,6 +22,8 @@
           }
         }
       ```
+and 
+
       ```
         {
             movie(title:"Top Gun: Maverick"){
@@ -28,13 +33,15 @@
             }
           }
      ```         
-    * Show dynamic client:
-      * `GET` /graphql/search/{keyword} with "Godfather"
-    * Show typesafe client:
-      * `GET` /graphql/{title} with "Top Gun: Maverick"
-    * Add source
 
-      ```
+* Show dynamic client:
+  * `GET` /graphql/search/{keyword} with "Godfather"
+* Show typesafe client:
+  * `GET` /graphql/{title} with "Top Gun: Maverick"
+
+### Add source
+
+    ```
          {
             movie(title:"Top Gun: Maverick"){
               title:fullTitle
@@ -49,8 +56,10 @@
               }
             }
           }
-      ```
-  * Add deeper level source
+    ```
+
+#### Add deeper level source
+
     ```
         public List<Actor> getMainActors(@Source CastMembers castMembers, int limit){
             return castMembers.getActors().subList(0, limit);
@@ -58,6 +67,7 @@
     ```
     
     Then query
+
     ```
           {
             movie(title:"Top Gun: Maverick"){
@@ -79,8 +89,9 @@
     * `GET` /graphql/mainactors/{title}/{limit} with "Top Gun: Maverick" and "3"
 
 ## Multiple queries in one request
-  * Query 2 movies
-    * Add Another movie
+
+  Query 2 movies
+
       ```
         {
           topgun:movie(title:"Top Gun: Maverick"){
@@ -110,14 +121,14 @@
       ```
 
 ## Map support
-  * Add Map of ratings
-    * Java:
+  Add Map of ratings
+
       ```
         public Map<Reviewer,Double> getRatings(@Source Movie movie){
             return movieService.getMovieRatings(movie.getId());
         }
       ```
-    * GraphQL:
+
       ```
         {
           topgun:movie(title:"Top Gun: Maverick"){
@@ -131,7 +142,9 @@
           }
         }
       ```
+
       or per key:
+
       
       ```
       {
@@ -145,41 +158,42 @@
         }
       }
       ```
+
   * Explain Adapter (AdaptWith and AdaptTo) - should we demo this ?
   * Show client(s)
 
 ## Mutation
-  * Add rate method
-    * Java:
-        ```
+
+    ```
         @Mutation
         public Map<Reviewer,Double> rate(String id, Double rating){
             movieService.rate(id, rating);
             return movieService.getMovieRatings(id);
         }
-        ```
-    * GraphQL:
-        ```
-            mutation rate {
-              rate(id: "tt1745960", rating: 7.0){
-                key
-                value
-              }
-            }
-        ```
+    ```
+
+
+    ```
+        mutation rate {
+          rate(id: "tt1745960", rating: 7.0){
+            key
+            value
+          }
+        }
+    ```
+
   * Show typesafe client
     * `GET` /graphql/rate/{id}/{rating} with "tt1745960" and "7.3"
 
 ## Subscriptions
-  * Add listenForRatingChange method
-    * Java:
+  
       ```
         @Subscription
         public Multi<Rating> listenForRateChanges(){
             return movieService.ratingChangedListener();
         }
       ```
-    * GraphQL:
+
       ```
         subscription listenForRatings {
           listenForRateChanges{
@@ -188,7 +202,9 @@
           }
         }      
       ```
+
       and
+
       ```
         mutation rate {
           rate(id: "tt1745960", rating: 9.9){
@@ -197,28 +213,32 @@
           }
         }
       ```
+
   * Show client(s)
     * Start a subscription using dynamic client: `GET` /graphql/listen
     * Trigger an event: `GET` /graphql/rate/{id}/{rating} with id="tt1745960" and rating=6
     * Show the server log with the update event
 
 ## Security
-  * Secure the rate method
-    * `@RolesAllowed("admin")` on rate method
-    * also add `oidc` in pom
-  * Show failure
-  * Authenticate and show success
-  * Show client(s)
+  
+* `@RolesAllowed("admin")` on rate method
+* also add `oidc` in pom
+* Show failure
+* Authenticate and show success
+* Show client(s)
 
 ## Error Handling
 ### Schema Validation and Bean validation
 
-  * Add the Bean validation in the rate method:
+  Add the Bean validation in the rate method:
+
     ```
     @DecimalMin(value = "0.0", message = "Rating too low")
     @DecimalMax(value = "10.0", message = "Rating too high")
     ```
-  * Run with valid and invalid input
+
+  Run with valid and invalid input
+
    ```
    mutation rateMovie{
     rate(id:"tt0137523",rating:11.3, key:quarkus){
@@ -226,37 +246,40 @@
       value
     }
   }
-   ```
+  ```
+
 ### Partial responses
 
 * Add `@RolesAllowed("user")` to the getReviews method
 * Run without authentication
 
 ## Non-blocking
-  * Add reviews source Uni
-    * Java:
+  Add reviews source Uni
+  
       ```
         public Uni<Reviews> getReviews(@Source Movie movie){
           System.out.println(">>>>>>> REVIEW :" + Thread.currentThread().getName());
           return movieService.getReviews(movie.getId());
         }
       ```
-     Also Add `Sys.out` in Movie
 
-    * GraphQL
-      ```
-        {
-          movie(title:"Top Gun: Maverick"){
-            fullTitle
-            reviews {
-              review{
-                title
-                content
-              }
+  Also Add `Sys.out` in Movie
+
+
+    ```
+      {
+        movie(title:"Top Gun: Maverick"){
+          fullTitle
+          reviews {
+            review{
+              title
+              content
             }
           }
         }
-      ```
+      }
+    ```
+
   * Demo mix of worker and eventloop
   * Talk about `@NonBlocking`
   * Show client(s) ?
