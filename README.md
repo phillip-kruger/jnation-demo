@@ -10,7 +10,7 @@
 
 ## Convert to GraphQL
 
-    Convert the server + first source
+Convert the server + first source
 
 ### Basic
 
@@ -66,7 +66,7 @@ and
         }
     ```
     
-    Then query
+Then query
 
     ```
           {
@@ -90,7 +90,7 @@ and
 
 ## Multiple queries in one request
 
-  Query 2 movies
+Query 2 movies
 
       ```
         {
@@ -121,7 +121,8 @@ and
       ```
 
 ## Map support
-  Add Map of ratings
+
+Add Map of ratings
 
       ```
         public Map<Reviewer,Double> getRatings(@Source Movie movie){
@@ -143,7 +144,7 @@ and
         }
       ```
 
-      or per key:
+or per key:
 
       
       ```
@@ -171,7 +172,6 @@ and
             return movieService.getMovieRatings(id);
         }
     ```
-
 
     ```
         mutation rate {
@@ -203,7 +203,7 @@ and
         }      
       ```
 
-      and
+and
 
       ```
         mutation rate {
@@ -230,14 +230,14 @@ and
 ## Error Handling
 ### Schema Validation and Bean validation
 
-  Add the Bean validation in the rate method:
+Add the Bean validation in the rate method:
 
     ```
     @DecimalMin(value = "0.0", message = "Rating too low")
     @DecimalMax(value = "10.0", message = "Rating too high")
     ```
 
-  Run with valid and invalid input
+Run with valid and invalid input
 
    ```
    mutation rateMovie{
@@ -254,7 +254,8 @@ and
 * Run without authentication
 
 ## Non-blocking
-  Add reviews source Uni
+
+Add reviews source Uni
   
       ```
         public Uni<Reviews> getReviews(@Source Movie movie){
@@ -263,7 +264,7 @@ and
         }
       ```
 
-  Also Add `Sys.out` in Movie
+Also Add `Sys.out` in Movie
 
 
     ```
