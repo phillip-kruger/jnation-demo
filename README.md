@@ -1,6 +1,6 @@
 # JNation GraphQL Demo
 
-* Existing REST Application
+##  Existing REST Application
   * Show server and Swagger UI
     * `GET` /movie/search/{keyword} with "Godfather" 
     * `GET` /movie/{title} with "Top Gun: Maverick"
@@ -8,7 +8,7 @@
   * Show client
     * `GET` /jaxrs/{title} with "Top Gun: Maverick"
 
-* Convert to GraphQL
+## Convert to GraphQL
   * Convert the server + first source
     * Basic
       ```
@@ -78,7 +78,7 @@
   * Show source with typesafe client
     * `GET` /graphql/mainactors/{title}/{limit} with "Top Gun: Maverick" and "3"
 
-* Multiple queries in one request
+## Multiple queries in one request
   * Query 2 movies
     * Add Another movie
       ```
@@ -109,7 +109,7 @@
         }
       ```
 
-* Map support
+## Map support
   * Add Map of ratings
     * Java:
       ```
@@ -148,7 +148,7 @@
   * Explain Adapter (AdaptWith and AdaptTo) - should we demo this ?
   * Show client(s)
 
-* Mutation
+## Mutation
   * Add rate method
     * Java:
         ```
@@ -170,7 +170,7 @@
   * Show typesafe client
     * `GET` /graphql/rate/{id}/{rating} with "tt1745960" and "7.3"
 
-* Subscriptions
+## Subscriptions
   * Add listenForRatingChange method
     * Java:
       ```
@@ -202,7 +202,7 @@
     * Trigger an event: `GET` /graphql/rate/{id}/{rating} with id="tt1745960" and rating=6
     * Show the server log with the update event
 
-* Security
+## Security
   * Secure the rate method
     * `@RolesAllowed("admin")` on rate method
     * also add `oidc` in pom
@@ -210,7 +210,29 @@
   * Authenticate and show success
   * Show client(s)
 
-* Non-blocking
+## Error Handling
+### Schema Validation and Bean validation
+
+  * Add the Bean validation in the rate method:
+    ```
+    @DecimalMin(value = "0.0", message = "Rating too low")
+    @DecimalMax(value = "10.0", message = "Rating too high")
+    ```
+  * Run with valid and invalid input
+   ```
+   mutation rateMovie{
+    rate(id:"tt0137523",rating:11.3, key:quarkus){
+      key
+      value
+    }
+  }
+   ```
+### Partial responses
+
+* Add `@RolesAllowed("user")` to the getReviews method
+* Run without authentication
+
+## Non-blocking
   * Add reviews source Uni
     * Java:
       ```
@@ -239,7 +261,6 @@
   * Talk about `@NonBlocking`
   * Show client(s) ?
 
-TODO:
-Error Handling (with vaidation ?) and partial errors
-Context ?
-??
+## Other:
+
+* Context
