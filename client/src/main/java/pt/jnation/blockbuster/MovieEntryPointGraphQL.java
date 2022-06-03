@@ -94,7 +94,7 @@ public class MovieEntryPointGraphQL {
     @GET
     @Path("/mainactors/{title}/{limit}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Actor> getMainActors(@PathParam("title") String title, @PathParam("limit") Integer limit) {
+    public List<Actor> getMainActors(@PathParam("title") String title, @PathParam("limit") Long limit) {
         return typesafeClient.getMainActors(title, limit).getCastMembers().getMainActors();
     }
 
@@ -113,12 +113,14 @@ public class MovieEntryPointGraphQL {
             operation(OperationType.SUBSCRIPTION,
                 field("listenForRateChanges",
                     field("id"),
-                    field("rating")))
+                    field("quarkus"),
+                    field("metacritic")
+                    ))
         );
         dynamicClient.subscription(sub)
             .subscribe()
             .with(item -> {
-                System.out.println("NEW RATING: " + item.getData());
+                System.out.println("NEW RATINGS: " + item.getData());
             });
     }
 

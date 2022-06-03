@@ -18,7 +18,7 @@ public interface MovieGraphQLTypesafeClient {
     Movie getMovie(String title);
 
     @Query("movie")
-    MovieCastMembersOnly getMainActors(String title, @NestedParameter({"castMembers.mainActors"}) int limit);
+    MovieCastMembersOnly getMainActors(String title, @NestedParameter({"castMembers.mainActors"}) long limit);
 
     @Mutation
     Map<Reviewer,Double> rate(String id, Double rating);
