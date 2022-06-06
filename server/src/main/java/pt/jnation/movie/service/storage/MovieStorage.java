@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import javax.enterprise.util.AnnotationLiteral;
 import javax.inject.Qualifier;
-import pt.jnation.movie.graphql.config.Storage;
+import pt.jnation.movie.config.Storage;
 
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
