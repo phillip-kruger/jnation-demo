@@ -1,6 +1,7 @@
 package pt.jnation.movie.service.storage;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -69,7 +70,7 @@ public class MovieDB implements MovieStorable {
     public CastMembers newCastMembers(CastMembers castMembers) {
         if(castMembers!=null){
             
-            Set<Actor> emActors = new HashSet<>();
+            LinkedHashSet<Actor> emActors = new LinkedHashSet<>();
             for(Actor a:castMembers.actors){
                 Actor existingActor = Actor.findById(a.id);
                 if(existingActor==null){
@@ -79,7 +80,7 @@ public class MovieDB implements MovieStorable {
                 }
                 emActors.add(a);
             }
-            castMembers.actors = emActors;
+            castMembers.actors = emActors.toArray(new Actor[]{});
             
             castMembers.persist();
         }

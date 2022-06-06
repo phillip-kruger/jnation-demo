@@ -3,6 +3,7 @@ package pt.jnation.movie.graphql;
 import io.smallrye.graphql.api.Subscription;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -50,7 +51,8 @@ public class MovieResource {
     }
     
     public Set<Actor> getMainActors(@Source CastMembers castMembers, long limit){
-        return castMembers.actors.stream().limit(limit)
+        List<Actor> listOfActors = Arrays.asList(castMembers.actors);
+        return listOfActors.stream().limit(limit)
                                 .collect(Collectors.toSet());
     }
     

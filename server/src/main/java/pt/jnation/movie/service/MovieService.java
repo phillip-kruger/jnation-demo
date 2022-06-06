@@ -66,11 +66,9 @@ public class MovieService {
     public Movie getMovieById(String id){
         Movie storedMovie = movieStorage.getMovieById(id);
         if(storedMovie!=null){
-            System.out.println(">> Returning movie from storage");
             return storedMovie;
         }else {
             Movie imdbMovie = movieIMDB.getMovieById(id);
-            System.out.println(">> Returning movie from IMDb");
             return movieStorage.newMovie(imdbMovie);
         }
     }
