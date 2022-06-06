@@ -8,10 +8,12 @@ import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import picocli.CommandLine;
 import pt.jnation.blockbuster.Utils;
 import pt.jnation.blockbuster.graphql.MovieGraphQLTypesafeClient;
+import pt.jnation.blockbuster.model.Reviewer;
 
 import javax.inject.Inject;
 
 import java.io.IOException;
+import java.util.Map;
 
 import static io.smallrye.graphql.client.core.Argument.arg;
 import static io.smallrye.graphql.client.core.Argument.args;
@@ -77,6 +79,17 @@ public class RunWithGraphQLClient implements Runnable {
             */
             if (operation.equals("mainActors")) {
                 Utils.print(typesafeClient.getMainActors("Top Gun: Maverick", 3).getCastMembers().getMainActors());
+            }
+            /*  mutation {
+                    rate(id: "tt1745960", rating: 7.0){
+                        key
+                        value
+                    }
+                }
+             */
+            if (operation.equals("rate")) {
+                Map<Reviewer, Double> result = typesafeClient.rate("tt1745960", 8.3);
+                System.out.println(result);
             }
             /*  subscription {
                     listenForRateChanges {

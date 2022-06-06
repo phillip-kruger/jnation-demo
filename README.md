@@ -6,7 +6,8 @@
     * `GET` /movie/{title} with "Top Gun: Maverick"
     * `GET` /movie/cast/{id} with "tt1745960"
   * Show client
-    * `GET` /jaxrs/{title} with "Top Gun: Maverick"
+    * `mprest -o search`
+    * `mprest -o get`
 
 ## Convert to GraphQL
 
@@ -85,7 +86,7 @@ Then query
     ```
 
   * Show source with typesafe client
-    * `GET` /graphql/mainactors/{title}/{limit} with "Top Gun: Maverick" and "3"
+    * `graphql -o mainActors`
 
 ## Multiple queries in one request
 
@@ -160,7 +161,6 @@ or per key:
       ```
 
   * Explain Adapter (AdaptWith and AdaptTo) - should we demo this ?
-  * Show client(s)
 
 ## Mutation
 
@@ -181,8 +181,8 @@ or per key:
         }
     ```
 
-  * Show typesafe client
-    * `GET` /graphql/rate/{id}/{rating} with "tt1745960" and "7.3"
+  * Show typesafe client (serves as example for both Map and Mutation)
+    * `graphql -o rate`
 
 ## Subscriptions
   
@@ -214,9 +214,8 @@ and
       ```
 
   * Show client(s)
-    * Start a subscription using dynamic client: `GET` /graphql/listen
-    * Trigger an event: `GET` /graphql/rate/{id}/{rating} with id="tt1745960" and rating=6
-    * Show the server log with the update event
+    * `graphql -o listen`
+    * On the server side, call the `rate` mutation
 
 ## Security
   
