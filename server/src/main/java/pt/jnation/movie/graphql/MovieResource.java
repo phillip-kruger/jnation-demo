@@ -1,5 +1,6 @@
 package pt.jnation.movie.graphql;
 
+import pt.jnation.movie.ReviewSystemUnavailableException;
 import io.smallrye.graphql.api.Subscription;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;

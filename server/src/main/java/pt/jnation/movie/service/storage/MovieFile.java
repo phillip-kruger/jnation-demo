@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import pt.jnation.movie.config.Storage;
+import pt.jnation.movie.Storage;
 import pt.jnation.movie.model.CastMembers;
 import pt.jnation.movie.model.Movie;
 import pt.jnation.movie.model.MovieRatings;

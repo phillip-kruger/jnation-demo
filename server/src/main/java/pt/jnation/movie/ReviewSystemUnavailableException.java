@@ -1,4 +1,4 @@
-package pt.jnation.movie.graphql;
+package pt.jnation.movie;
 
 public class ReviewSystemUnavailableException extends Exception {
 

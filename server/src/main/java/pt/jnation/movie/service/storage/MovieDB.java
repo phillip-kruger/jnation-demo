@@ -5,7 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-import pt.jnation.movie.config.Storage;
+import pt.jnation.movie.Storage;
 import pt.jnation.movie.model.Actor;
 import pt.jnation.movie.model.CastMembers;
 import pt.jnation.movie.model.Company;

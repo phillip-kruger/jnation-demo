@@ -5,7 +5,7 @@ import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import pt.jnation.movie.config.Storage;
+import pt.jnation.movie.Storage;
 
 @ApplicationScoped
 public class MovieStorageFactory {

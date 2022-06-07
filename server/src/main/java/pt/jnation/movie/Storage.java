@@ -1,4 +1,4 @@
-package pt.jnation.movie.config;
+package pt.jnation.movie;
 
 public enum Storage {
     file, db

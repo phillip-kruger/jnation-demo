@@ -13,6 +13,7 @@ import pt.jnation.movie.model.MovieReference;
 import pt.jnation.movie.service.MovieService;
 
 @Path("/movie")
+@Produces(MediaType.APPLICATION_JSON)
 public class MovieResource {
 
     @Inject
@@ -20,28 +21,24 @@ public class MovieResource {
     
     @GET
     @Path("/search/{keyword}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<MovieReference> searchMovies(@PathParam("keyword") String keyword) {
         return movieService.searchMovies(keyword).results;
     }
     
     @GET
     @Path("/{title}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Movie getMovie(@PathParam("title") String title) {
         return movieService.getMovie(title);
     }
     
     @GET
     @Path("/id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Movie getMovieById(@PathParam("id") String id) {
         return movieService.getMovieById(id);
     }
     
     @GET
     @Path("/cast/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public CastMembers getCastMembers(@PathParam("id") String id){
         return movieService.getCastMembers(id);
     }
