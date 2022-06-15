@@ -8,6 +8,8 @@ import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import picocli.CommandLine;
 import pt.jnation.blockbuster.Utils;
 import pt.jnation.blockbuster.graphql.MovieGraphQLTypesafeClient;
+import pt.jnation.blockbuster.model.MovieRatings;
+import pt.jnation.blockbuster.model.MovieRatingsAsRecord;
 import pt.jnation.blockbuster.model.Reviewer;
 
 import javax.inject.Inject;
@@ -112,6 +114,7 @@ public class RunWithGraphQLClient implements Runnable {
                     .subscribe()
                     .with(item -> {
                         System.out.println("NEW RATINGS: " + item.getData());
+//                        System.out.println("NEW RATINGS: " + item.getObject(MovieRatingsAsRecord.class, "listenForRateChanges"));
                     });
                 waitForExit();
             }
