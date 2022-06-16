@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
@@ -64,8 +65,8 @@ public class MovieResource {
     @Mutation
     //@RolesAllowed("admin")
     public Map<Reviewer,Double> rate(String id, 
-            @DecimalMin(value = "0.0", message = "Rating too low") 
-            @DecimalMax(value = "10.0", message = "Rating too high")
+            @Min(value = 0, message = "Rating too low")
+            @Max(value = 10, message = "Rating too high")
             Double rating){
         return movieService.addRating(id, rating);
     }
